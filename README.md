@@ -36,6 +36,42 @@ For a visual, interactive experience:
 streamlit run dashboard.py
 ```
 
+## Deployment (Hugging Face Spaces)
+
+The easiest way to deploy is to push your code directly to the Space.
+
+1.  **Create Space**:
+    *   Go to [huggingface.co/new-space](https://huggingface.co/new-space).
+    *   Name it `ai-risk-analyzer`.
+    *   Select SDK: **Docker**.
+    *   Click **Create Space**.
+
+2.  **Push Code**:
+    *   On your local machine (inside the project folder):
+    ```bash
+    # Replace USERNAME with your Hugging Face username
+    git remote add space https://huggingface.co/spaces/USERNAME/ai-risk-analyzer
+    
+    # Push code to the Space
+    git push space main
+    ```
+
+3.  **Launch**:
+    *   The Space will build the Docker container (takes ~3 mins).
+    *   Your app will be live at `https://huggingface.co/spaces/USERNAME/ai-risk-analyzer`.
+
+### Option 2: Manual Upload (Drag & Drop)
+
+If command line fails, you can upload files via the web interface:
+
+1.  Go to your Space's **Files** tab.
+2.  Click **Add file** -> **Upload files**.
+3.  Drag and drop: `app.py`, `dashboard.py`, `Dockerfile`, `requirements.txt`, and `.dockerignore`.
+4.  **Important**: For the `src` folder, you must ensure the structure is preserved. 
+    *   If the web UI allows folder drag-and-drop, drag the `src` folder.
+    *   If not, create a folder named `src` manually, open it, and upload the python files inside it.
+5.  Commit changes. The build will start automatically.
+
 ## Project Structure
 
 - `src/data_loader.py`: Fetches market data using yfinance.

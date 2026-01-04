@@ -9,7 +9,7 @@ import pandas as pd
 from typing import Dict, List
 
 def generate_pdf_report(
-    filename: str, 
+    filename: Union[str, BytesIO], 
     risk_metrics: pd.DataFrame, 
     monte_carlo_stats: Dict[str, Dict], 
     charts: Dict[str, BytesIO]

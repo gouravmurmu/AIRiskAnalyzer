@@ -108,23 +108,24 @@ if run_btn:
     # --- PDF Generation ---
     st.header("3. Export Report")
     
-    # We need to reset buffer pointers for the PDF generation since st.image might have consumed them? 
-    # BytesIO in Python: if we read it, position moves.
-    # plot functions created fresh buffers. st.image reads. 
-    # We should ensure `charts` dictionary has buffers at position 0.
-    for name, buf in charts.items():
-        buf.seek(0)
-
     if st.button("Generate PDF Report"):
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
-            generate_pdf_report(tmp_file.name, metrics, mc_results, charts)
+        # Reset buffer pointers for all charts
+        for name, buf in charts.items():
+            buf.seek(0)
             
-            with open(tmp_file.name, "rb") as f:
-                pdf_bytes = f.read()
-                
+        # Generate PDF in-memory
+        from io import BytesIO
+        pdf_buffer = BytesIO()
+        
+        try:
+            generate_pdf_report(pdf_buffer, metrics, mc_results, charts)
+            pdf_buffer.seek(0)
+            
             st.download_button(
                 label="Download PDF Risk Report",
-                data=pdf_bytes,
+                data=pdf_buffer,
                 file_name="risk_report.pdf",
                 mime="application/pdf"
             )
+        except Exception as e:
+            st.error(f"Failed to generate PDF: {e}")
