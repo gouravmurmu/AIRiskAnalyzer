@@ -24,6 +24,20 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# --- CSS for UI Stabilization ---
+st.markdown("""
+<style>
+    /* Force vertical scrollbar to always show, preventing layout shift (shaking) */
+    html { overflow-y: scroll; }
+    
+    /* Stabilize main container padding */
+    .block-container { padding-top: 1rem; padding-bottom: 5rem; }
+    
+    /* Ensure images don't overflow causing horizontal shake */
+    img { max-width: 100%; }
+</style>
+""", unsafe_allow_html=True)
+
 # --- Sidebar Configuration ---
 st.sidebar.header("Configuration")
 
