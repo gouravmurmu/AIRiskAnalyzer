@@ -6,7 +6,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from io import BytesIO
 import pandas as pd
-from typing import Dict, List
+from typing import Dict, List, Union
 
 def generate_pdf_report(
     filename: Union[str, BytesIO], 
